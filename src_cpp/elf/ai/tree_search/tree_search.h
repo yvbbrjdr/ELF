@@ -451,6 +451,14 @@ class TreeSearchT {
     }
   }
 
+  void clearSearchTree() {
+    searchTree_.clear();
+  }
+
+  void setNumRolloutsPerThread(int value) {
+    options_.num_rollouts_per_thread = value;
+  }
+
  private:
   // Multiple threads.
   std::vector<std::thread> threadPool_;

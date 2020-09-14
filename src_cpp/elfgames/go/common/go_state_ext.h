@@ -236,7 +236,7 @@ struct GoStateExt {
   }
 
  protected:
-  const int _game_idx;
+  int _game_idx;
   int _seq = 0;
 
   GoState _state;

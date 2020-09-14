@@ -1,0 +1,5 @@
+git clone --recursive https://github.com/yvbbrjdr/ELF
+cd ELF
+make
+cd scripts/elfgames/go
+./play.sh

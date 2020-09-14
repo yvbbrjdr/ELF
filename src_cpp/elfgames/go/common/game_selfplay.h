@@ -10,6 +10,7 @@
 
 #include <memory>
 #include <random>
+#include <stack>
 #include <string>
 
 #include "elf/base/dispatcher.h"
@@ -55,6 +56,26 @@ class GoGameSelfPlay : public GoGameBase {
     return _state_ext.getLastGameFinalValue();
   }
 
+  bool undo() {
+    if (!_state_exts.empty()) {
+      _state_ext = _state_exts.top();
+      _state_exts.pop();
+      if (_ai)
+        _ai->getEngine()->clearSearchTree();
+      if (_ai2)
+        _ai2->getEngine()->clearSearchTree();
+      return true;
+    }
+    return false;
+  }
+
+  void setNumRolloutsPerThread(int value) {
+    if (_ai)
+      _ai->getEngine()->setNumRolloutsPerThread(value);
+    if (_ai2)
+      _ai->getEngine()->setNumRolloutsPerThread(value);
+  }
+
  private:
   void setAsync();
   void restart();
@@ -74,6 +95,7 @@ class GoGameSelfPlay : public GoGameBase {
   ThreadedDispatcher* dispatcher_ = nullptr;
   GameNotifierBase* notifier_ = nullptr;
   GoStateExt _state_ext;
+  std::stack<GoStateExt> _state_exts;
 
   Sgf _preload_sgf;
   Sgf::iterator _sgf_iter;

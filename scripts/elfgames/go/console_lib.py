@@ -271,6 +271,17 @@ class GoConsoleGTP:
         msg = "\n".join(self.commands.keys())
         return True, msg
 
+    def on_undo(self, batch, items, reply):
+        ret = self.undo(batch)
+        msg = None
+        if not ret:
+            msg = 'Empty history'
+        return ret, msg
+
+    def on_set_num_rollouts_per_thread(self, batch, items, reply):
+        self.set_num_rollouts_per_thread(batch, int(items[1]))
+        return True, None
+
     def __init__(self, GC, evaluator):
         self.exit = False
         self.GC = GC
@@ -318,6 +329,12 @@ class GoConsoleGTP:
 
     def get_final_score(self, batch):
         return batch.GC.getGame(0).getLastScore()
+
+    def undo(self, batch):
+        return batch.GC.getGame(0).undo()
+
+    def set_num_rollouts_per_thread(self, batch, value):
+        batch.GC.getGame(0).setNumRolloutsPerThread(value)
 
     def check_player(self, batch, player):
         board_next_player = self.get_next_player(batch)

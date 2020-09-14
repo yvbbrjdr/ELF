@@ -59,7 +59,9 @@ void registerPy(pybind11::module& m) {
       .def("getNextPlayer", &GoGameSelfPlay::getNextPlayer)
       .def("getLastMove", &GoGameSelfPlay::getLastMove)
       .def("getScore", &GoGameSelfPlay::getScore)
-      .def("getLastScore", &GoGameSelfPlay::getLastScore);
+      .def("getLastScore", &GoGameSelfPlay::getLastScore)
+      .def("undo", &GoGameSelfPlay::undo)
+      .def("setNumRolloutsPerThread", &GoGameSelfPlay::setNumRolloutsPerThread);
 }
 
 } // namespace go

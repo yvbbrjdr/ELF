@@ -300,6 +300,7 @@ void GoGameSelfPlay::act() {
       BoardFeature bf(s);
       GoReply reply(bf);
       _human_player->act(bf, &reply);
+      _state_exts.push(_state_ext);
       // skip the current move, and ask the ai to move.
       if (reply.c == M_SKIP)
         break;
